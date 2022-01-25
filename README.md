@@ -10,7 +10,7 @@ This repo is part of  [Arikaim CMS](http://arikaim.com)  project.
 
 ```sh
 
-    npm install @arikaim/arikaim-client
+npm install @arikaim/arikaim-client
 
 ```
 
