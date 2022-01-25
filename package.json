@@ -1,0 +1,13 @@
+{
+    "name": "@arikaim/arikaim-client",
+    "version": "1.0.0",
+    "description": "Arikaim CMS Api client",
+    "license": "MIT",
+    "homepage": "http://arikaim.com",
+    "dependencies": {
+        "axios": "^0.25.0"
+    },
+    "exports": {
+        ".": "./src/arikaim-client.js"
+    }
+}
