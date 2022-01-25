@@ -3,6 +3,9 @@
 ![license: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 
+This repo is part of  ![Arikaim CMS](http://arikaim.com)  project.
+
+
 ### Installation
 
 ```sh
