@@ -1,11 +1,17 @@
 {
     "name": "@arikaim/arikaim-client",
     "version": "1.0.0",
+    "author": "Konstantin Atanasov",
     "description": "Arikaim CMS Api client",
+    "email": "info@arikaim.com",
     "license": "MIT",
     "homepage": "http://arikaim.com",
     "dependencies": {
         "axios": "^0.25.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/arikaim/api-client-js.git"
     },
     "exports": {
         ".": "./src/arikaim-client.js"

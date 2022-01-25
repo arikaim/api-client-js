@@ -7,12 +7,28 @@
 
 ```sh
 
+    npm install @arikaim/arikaim-client
+
 ```
 
 ### Usage
 
 ```js
 
+const ArikaimClient = require('@arikaim/arikaim-client');
+
+
+var client = new ArikaimClient(apiEndpoint,apiKey);
+
+client.request(method,url,{
+
+    // request data  key: value
+
+}).then(function (response) {
+    // response.data;  
+}).catch(function (error) {
+   // error
+});
 
 
 ```
