@@ -1,11 +1,12 @@
 {
     "name": "@arikaim/arikaim-client",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Konstantin Atanasov",
     "description": "Arikaim CMS Api client",
     "email": "info@arikaim.com",
     "license": "MIT",
     "homepage": "http://arikaim.com",
+    "keywords": ["arikaim cms","arikaim","api client","client"],
     "dependencies": {
         "axios": "^0.25.0"
     },
