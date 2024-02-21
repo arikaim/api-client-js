@@ -5,14 +5,15 @@
  *  http://www.arikaim.com
 */
 
-require('./utils.js');
-const merge = require('deepmerge');
-const axios = require('axios');
+import merge from 'deepmerge';
+import axios from 'axios';
+
+import { isEmpty } from '@arikaim/arikaim-client/utils';
 
 /**
  *  Arikaim client class
  */
-class ArikaimClient {
+export class ArikaimClient {
     #axios;
     #apiEndpoint;
     #accessToken;
@@ -134,5 +135,3 @@ class ArikaimClient {
         return this.request('delete',url,params);
     }
 }
-
-module.exports = ArikaimClient;

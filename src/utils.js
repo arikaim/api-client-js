@@ -5,18 +5,18 @@
  * @copyright   Copyright (c)  Konstantin Atanasov <info@arikaim.com>
 */
 
-global.isFunction = function(variable) {
+export function isFunction(variable) {
     return (typeof variable === 'function');
 }
 
-global.callFunction = function(function_name,params) {
+export function callFunction(function_name,params) {
     if (isFunction(function_name) == true) {
         return function_name(params);
     }
     return null;
 }
 
-global.isJSON = function(json) {
+export function isJSON(json) {
     try {
         var json = JSON.stringify(json);
         var json = JSON.parse(json);
@@ -31,22 +31,22 @@ global.isJSON = function(json) {
     return true;
 }
 
-global.getObjectProperty = function(path, obj) {
+export function getObjectProperty(path, obj) {
     return path.split('.').reduce(function(prev, curr) {
         return prev ? prev[curr] : null
     }, obj || self)
 }
 
-global.getValue = function(path,obj,defaultValue) {
+export function getValue(path,obj,defaultValue) {
     var val = getObjectProperty(path,obj);
     return (val == null) ? defaultValue : val;      
 }
 
-global.getDefaultValue = function(variable, defaultValue) {
+export function getDefaultValue(variable, defaultValue) {
     return (isEmpty(variable) == true) ? defaultValue : variable;      
 }
 
-global.isEmpty = function(variable) {
+export function isEmpty(variable) {
     if (variable === undefined) return true;
     if (variable === null) return true;
     if (variable === "") return true;
@@ -54,10 +54,10 @@ global.isEmpty = function(variable) {
     return false;
 }
 
-global.isObject = function(variable) {
+export function isObject(variable) {
     return (typeof variable === 'object');
 }
 
-global.isArray = function(variable) {
+export function isArray(variable) {
     return (isEmpty(variable) == true) ? false : (variable.constructor === Array);   
 }

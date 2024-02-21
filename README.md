@@ -18,7 +18,7 @@ npm install @arikaim/arikaim-client
 
 ```js
 
-const ArikaimClient = require('@arikaim/arikaim-client');
+import { ArikaimClient } from '@arikaim/arikaim-client';
 
 
 var client = new ArikaimClient(apiEndpoint,apiKey);
