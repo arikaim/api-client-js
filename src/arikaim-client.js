@@ -6,6 +6,7 @@
 */
 
 require('./utils.js');
+const merge = require('deepmerge');
 const axios = require('axios');
 
 /**
@@ -15,12 +16,19 @@ class ArikaimClient {
     #axios;
     #apiEndpoint;
     #accessToken;
-    #headers = { 'Content-Type': 'application/json' };
+    #headers;
 
-    constructor(apiEndpointUrl, apiToken, timeout) {
+    constructor(apiEndpointUrl, apiToken, timeout, headers) {
+        this.#headers = { 
+            'Content-Type': 'application/json' 
+        };
         this.token = apiToken;
         this.#apiEndpoint = apiEndpointUrl;
         timeout = (isEmpty(timeout) == true) ? 3000 : timeout;
+
+        if (isEmpty(headers) == false) {
+            this.#headers = merge( this.#headers,headers);
+        }
 
         this.#axios = axios.create({
             baseURL: apiEndpointUrl,
@@ -58,12 +66,8 @@ class ArikaimClient {
         return this.#accessToken;
     }
 
-    get client() {
+    get axios() {
         return this.#axios;
-    }
-
-    set client(value) {
-        this.#axios = value;
     }
 
     request(method, url, data) {
@@ -85,7 +89,21 @@ class ArikaimClient {
             config.params = data;
         }
 
-        return this.client(config);      
+        return this.#axios(config).then(function (response) {
+            // response.data;           
+            if (ArikaimClient.isSuccess(response.data) == false) {
+                return Promise.reject(response.data);     
+            } 
+            
+            return Promise.resolve(response.data);
+        }).catch(function (error) {
+            // error          
+            return Promise.reject(error);     
+        });      
+    }
+
+    static isSuccess(response) {
+        return (response.status != 'error') 
     }
 
     get(url, data) {
