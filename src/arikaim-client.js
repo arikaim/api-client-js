@@ -60,6 +60,8 @@ export class ArikaimClient {
         this.#accessToken = value;
         if (isEmpty(value) == false) {
             this.#headers.Authorization = value;
+        } else {
+            delete this.#headers.Authorization;
         }       
     }
 
