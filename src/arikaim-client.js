@@ -28,7 +28,7 @@ export class ArikaimClient {
         timeout = (isEmpty(timeout) == true) ? 3000 : timeout;
 
         if (isEmpty(headers) == false) {
-            this.#headers = merge( this.#headers,headers);
+            this.#headers = merge(this.#headers,headers);
         }
 
         this.#axios = axios.create({
