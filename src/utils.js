@@ -31,6 +31,13 @@ export function isJSON(json) {
     return true;
 }
 
+export function getFormData(object) {
+    const formData = new FormData();
+    Object.keys(object).forEach(key => formData.append(key,object[key]));
+
+    return formData;
+}
+
 export function getObjectProperty(path, obj) {
     return path.split('.').reduce(function(prev, curr) {
         return prev ? prev[curr] : null

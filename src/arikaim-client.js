@@ -5,10 +5,9 @@
  *  http://www.arikaim.com
 */
 
-import merge from 'deepmerge';
 import axios from 'axios';
-
-import { isEmpty } from '@arikaim/arikaim-client/utils';
+import { writeFileSync, createReadStream } from 'fs';
+import { isEmpty, isObject } from '@arikaim/arikaim-client/utils';
 
 /**
  *  Arikaim client class
@@ -20,16 +19,15 @@ export class ArikaimClient {
     #headers;
 
     constructor(apiEndpointUrl, apiToken, timeout, headers) {
-        this.#headers = { 
-            'Content-Type': 'application/json' 
-        };
-        this.token = apiToken;
+        this.#headers = {};
         this.#apiEndpoint = apiEndpointUrl;
         timeout = (isEmpty(timeout) == true) ? 3000 : timeout;
 
-        if (isEmpty(headers) == false) {
-            this.#headers = merge(this.#headers,headers);
+        if (isObject(headers) == true) {
+            this.#headers = headers;           
         }
+        this.#headers['Content-Type'] = 'application/json';
+        this.token = apiToken;
 
         this.#axios = axios.create({
             baseURL: apiEndpointUrl,
@@ -40,12 +38,20 @@ export class ArikaimClient {
         this.#axios.interceptors.response.use(function (response) {
             return response;
         },function (error) {      
-            if (error.response.status == 400) {
+            if (parseInt(error.response.status) >= 400) {
                 return Promise.resolve(error.response);
             }
             
             return Promise.reject(error);
         });
+    }
+
+    setHeader(key,value) {
+        this.#headers[key] = value;
+    }
+
+    deleteHeader(key) {
+        delete this.#headers[key];
     }
 
     set endpoint(value) {
@@ -73,14 +79,14 @@ export class ArikaimClient {
         return this.#axios;
     }
 
-    request(method, url, data) {
+    request(method, path, data, file) {
         if (method == 'get' && isEmpty(data) == false) {
             this.#headers.Params = JSON.stringify(data);
         }
 
         var config = {
             method: method,
-            url: url,
+            url: path,
             headers: this.#headers
         };
 
@@ -90,6 +96,17 @@ export class ArikaimClient {
 
         if (method == 'delete') {
             config.params = data;
+        }
+
+        if (isEmpty(file) == false) {
+            // upload file
+            if (isObject(data) == false) {
+                data = {};
+            } 
+            data[file.key] = createReadStream(file.fileName)
+            // set config
+            config.headers['Content-Type'] = "multipart/form-data";
+            config.data = data;
         }
 
         return this.#axios(config).then(function (response) {
@@ -109,31 +126,46 @@ export class ArikaimClient {
         return (response.status != 'error') 
     }
 
-    get(url, data) {
-        return this.request('get',url,data);
+    get(path, data) {
+        return this.request('get',path,data);
     }
 
-    post(url, data) {
-        return this.request('post',url,data);
+    post(path, data, file) {
+        return this.request('post',path,data,file);
     }
 
-    put(url, data) {
-        return this.request('put',url,data);
+    put(path, data, file) {
+        return this.request('put',path,data,file);
     }
 
-    patch(url, data) {
-        return this.request('patch',url,data);
+    patch(path, data) {
+        return this.request('patch',path,data);
     }
 
-    options(url, data) {
-        return this.request('options',url,data);
+    options(path, data) {
+        return this.request('options',path,data);
     }
 
-    head(url, data) {
-        return this.request('head',url,data);
+    head(path, data) {
+        return this.request('head',path,data);
     }
 
-    delete(url, params) {
-        return this.request('delete',url,params);
+    delete(path, params) {
+        return this.request('delete',path,params);
+    }
+
+    upload(method, path, fileName, fieldKey, data) {
+        return this.request(method,path,data,{
+            key: fieldKey,
+            fileName: fileName
+        });
+    }
+
+    saveEncodedFile(data, fileName) {
+        if (Buffer.from(data,'base64').toString('base64') === data) {
+            data = Buffer.from(data,'base64');
+        }
+       
+        return writeFileSync(fileName,data);
     }
 }
