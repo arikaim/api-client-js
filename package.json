@@ -18,10 +18,18 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/arikaim/api-client-js.git"
+        "url": "git+https://github.com/arikaim/api-client-js.git"
     },
     "exports": {
         ".": "./src/arikaim-client.js",
         "./utils": "./src/utils.js"
+    },
+    "main": "index.js",
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bugs": {
+        "url": "https://github.com/arikaim/api-client-js/issues"
     }
 }
