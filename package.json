@@ -1,7 +1,7 @@
 {
     "name": "@arikaim/client",
     "type": "module",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "author": "Konstantin Atanasov",
     "description": "Arikaim CMS Api client",
     "email": "info@arikaim.com",

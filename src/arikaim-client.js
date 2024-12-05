@@ -7,7 +7,7 @@
 
 import axios from 'axios';
 import { writeFileSync, createReadStream } from 'fs';
-import { isEmpty, isObject } from '@arikaim/arikaim-client/utils';
+import { isEmpty, isObject } from '@arikaim/client/utils';
 
 /**
  *  Arikaim client class
