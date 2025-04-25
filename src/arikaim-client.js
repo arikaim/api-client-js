@@ -37,10 +37,12 @@ export class ArikaimClient {
         // disable errors for resposne with code 400
         this.#axios.interceptors.response.use(function (response) {
             return response;
-        },function (error) {      
-            if (parseInt(error.response.status) >= 400) {
-                return Promise.resolve(error.response);
-            }
+        },function (error) {    
+            if (error.response) {
+                if (parseInt(error.response.status) >= 400) {
+                    return Promise.resolve(error.response);
+                }
+            } 
             
             return Promise.reject(error);
         });
